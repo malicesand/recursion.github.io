@@ -4,12 +4,78 @@
 // denoted by n!, is the product of all positive integers less than or equal to n.
 // Example:  5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5);  // 120
-var factorial = function(n) {
-};
+var factorial = function(n, output=1) {
+  // base
+  if (n < 0) return null; //base case = edge case
+  if (n === 0) return 1; // another base case
+  if (n === 1) {
+    return output
+  }
+  //recursion
+    // how to update default parama?
+  output *= n; // accumulates multiplied product
+    //invoke function to keep moving
+  return factorial(n - 1, output)
+}
+factorial(4);
+
+//invoke
+  // if() //false
+  // output = 4
+  // return factorial (3, 4)
+    // output = 12
+      // return factorial (2, 12)
+        //output 12 * 2
+          // return (1, 24)
+    //
+
+// var factorial = function(n) {
+//   //base
+//   if (n === 0) {
+//     return 1;
+
+//   }
+//   //recursion
+
+//   return n * factorial (n - 1);
+
+// };
+
+// invoke factorial (4)
+factorial(4); // => 24
+  // if () // false
+  // return 4 * factorial(3) // MASTER RETURN STATEMENT
+
+  // factorial(3)
+    // if () //false
+    //return 3 * factorial(2)
+
+  //return 4 * 3 * factorial(2) //MASTER
+
+  //factorial(2)
+    // if false
+    // return 2 * factorial(1)
+  
+  // return 4 *3 *2 *factoraial(1) //MASTER
+
+  //=> 4*3*2*1*factorial(0) //MASTER
+  // factorial(0)
+    // if() // true
+
+    //FINAL MASTER
+      // 4 *3 * 2 * 1 *1
+// 5! => 5*4*3*2*1 = 120
 
 // 2. Compute the sum of an array of integers.
 // Example:  sum([1, 2, 3, 4, 5, 6]);  // 21
-var sum = function(array) {
+var sum = function(array, output = 0) {
+  //BASE
+  if (array.length === 0) {
+    return output
+  }
+  //RECURSION
+  output += array[0]
+  return sum(array.slice(1), output)
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
@@ -19,25 +85,94 @@ var arraySum = function(array) {
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+  //BASE
+  if (n === 1) {
+    return false
+  } else if (n === 0) {
+    return true
+  }
+  // RECURSION
+  if (n < 0) {
+    return isEven(n + 2)
+  }
+  return isEven(n - 2)
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
-var sumBelow = function(n) {
+var sumBelow = function(n, output = 0) {
+  //BASE
+  if (n === 0) {
+    return output
+
+  }
+  //RECURSION
+  if (n > 0) {
+    output += n - 1
+    return sumBelow(n - 1, output)
+  }
+  if (n < 0) {
+    output += n + 1
+    return sumBelow(n + 1, output)
+  }
+
 };
 
 // 6. Get the integers in range (x, y).
 // Example:  range(2, 9);  // [3, 4, 5, 6, 7, 8]
-var range = function(x, y) {
+var range = function(x, y, output = []) {
+  // base
+  if (x === y) {
+    return output
+  }
+  if (x < y) {
+    if (x === y - 1) {
+      return output;
+    }
+    // recursion
+    // how to update output?
+    output.push(x + 1); // []
+    // how to invoke range to keep the process moving
+    return range (x + 1, y, output)
+  }
+  if (x > y) {
+    if (x === y + 1) return output
+    output.push(x - 1)
+    return range (x - 1, y, output)
+  }
 };
+
+range(3, 6);
+
+//invoke range(3, 6) => [3, 4, 5, 6]
+  // if () // false
+  //RECURSION
+    // [4]
+    // return range (5, 6, [4])
+      
+         
 
 // 7. Compute the exponent of a number.
 // The exponent of a number says how many times the base number is used as a factor.
 // 8^2 = 8 x 8 = 64.  Here, 8 is the base and 2 is the exponent.
 // Example:  exponent(4,3);  // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
-var exponent = function(base, exp) {
+var exponent = function(base, exp, output = 1) {
+  //BASE
+  if (exp === 0) {
+    return output
+
+  }
+  //RECURSION
+  if (exp > 0) {
+    output *= base;
+    return exponent(base, exp - 1, output)
+  } 
+  if (exp < 0)
+    output /= base
+  return exponent(base, exp + 1, output)
+
 };
 
 // 8. Determine if a number is a power of two.
@@ -45,14 +180,57 @@ var exponent = function(base, exp) {
 // powerOfTwo(16); // true
 // powerOfTwo(10); // false
 var powerOfTwo = function(n) {
+  //BASE
+  if (n === 1) {
+    return true
+  }
+  if (n === 0) {
+    return false
+  }
+  if (n % 2 !==0) {
+    return false
+  }
+  return powerOfTwo(n / 2)
+  
 };
 
 // 9. Write a function that accepts a string a reverses it.
 var reverse = function(string) {
+  //BASE
+  if (string.length === 0) {
+    return string
+  }
+
+  // RECURSION
+  return string[string.length - 1] + reverse(string.slice(0, string.length -1))
+  
 };
 
 // 10. Write a function that determines if a string is a palindrome.
 var palindrome = function(string) {
+  // convert string variable to lowercase and use replaceAll to remove spaces
+  string = string.toLowerCase().replaceAll(' ', '');
+
+  // create variables for the first and last characters
+  var firstChar = string[0];
+  var lastChar = string[string.length - 1]
+
+  // BASE -- example of the base as logical true condition
+  // empty string or a string with one character us a palindrome
+  if (string.length <= 1) {
+    return true
+  }
+  // RECURSION
+  // check if first and last char are equal, recursively check if substring between first and last is equal
+  // palindromes will have identical start and end characters
+  if (firstChar != lastChar) {
+    // if not, return false
+    return false
+  }
+
+  // if equal, extract remaining substring and recursively check if it's a palindrome
+  // if palindrome, continues until string reduced to empty string or one character
+  return palindrome(string.substring(1, string.length - 1))
 };
 
 // 11. Write a function that returns the remainder of x divided by y without using the
@@ -148,7 +326,17 @@ var fibonacci = function(n) {
 // nthFibo(5); // 5
 // nthFibo(7); // 13
 // nthFibo(3); // 2
-var nthFibo = function(n) {
+var nthFibo = function(n, fib=[0, 1]) {
+  if (n < 0) {
+    return null
+  }
+
+  if (fib.length > n) {
+    return fib[n]
+  }
+
+  fib.push(fib[fib.length - 1] + fib[fib.length - 2]);
+  return nthFibo(n, fib)
 };
 
 // 26. Given an array of words, return a new array containing each word capitalized.
