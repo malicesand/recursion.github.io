@@ -245,11 +245,23 @@ var modulo = function(x, y) {
 // JavaScript's Math object.
 // ATTENTION DO NOT LEAVE COMMENTS IN THIS FUNCTION. The test is looking for any ('/').
 var multiply = function(x, y) {
+  if (x === 0 || y === 0) {
+    return 0;
+  } if (x === 1) {
+    return y
+  } if (y === 1) {
+    return x
+  } else if (y > 0) {
+    return x + multiply(x, y - 1);
+  } else {
+    return -multiply(x, -y)
+  }
 };
 
 // 13. Write a function that divides two numbers without using the / operator  or
 // JavaScript's Math object.
 var divide = function(x, y) {
+
 };
 
 // 14. Find the greatest common divisor (gcd) of two positive numbers.  The GCD of two
@@ -266,27 +278,66 @@ var gcd = function(x, y) {
 // compareStr('', '') // true
 // compareStr('tomato', 'tomato') // true
 var compareStr = function(str1, str2) {
+  //BASE
+  if (str1 === '' && str2 === '') {
+    return true
+  }
+  // RECURSION
+  if (str1[0] !== str2[0]) {
+    return false
+  }
+  if (str1[0] === str2[0]) {
+    return compareStr(str1.slice(1), str2.slice(1))
+  }
 };
 
 // 16. Write a function that accepts a string and creates an array where each letter
 // occupies an index of the array.
-var createArray = function(str){
+var createArray = function(str, output = []){
+  //BASE
+  if (str === ''){
+    return output
+  }
+  //RECURSION
+  output.push(str[0])
+  return createArray(str.slice(1), output)
 };
 
 // 17. Reverse the order of an array
-var reverseArr = function (array) {
+var reverseArr = function(array, output = []) {
+  //BASE
+  if (array.length === 0)
+    return output
+  //RECURSION
+  output.unshift(array[0]);
+    return reverseArr(array.slice(1), output)
 };
 
 // 18. Create a new array with a given value and length.
 // buildList(0,5) // [0,0,0,0,0]
 // buildList(7,3) // [7,7,7]
-var buildList = function(value, length) {
+var buildList = function(value, length, output = []) {
+  //BASE
+  if (length === 0)
+    return output
+  //RECURSION
+  output.push(value);
+  return buildList(value, length - 1, output)
 };
 
 // 19. Count the occurence of a value inside a list.
 // countOccurrence([2,7,4,4,1,4], 4) // 3
 // countOccurrence([2,'banana',4,4,1,'banana'], 'banana') // 2
-var countOccurrence = function(array, value) {
+var countOccurrence = function(array, value, count = 0) {
+  
+  //BASE
+  if (array.length === 0)
+    return count
+  //RECURSION
+  if (array[0] === value) {
+    count += 1
+  }
+  return countOccurrence(array.slice(1), value, count)
 };
 
 // 20. Write a recursive version of map.
